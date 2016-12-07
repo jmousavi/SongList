@@ -17,7 +17,7 @@ function Song(title,artist,album,year)
   };
   this.listened = 0;
   this.play = function(){
-    listened++;
+    this.listened++;
   };
 }
 
@@ -29,6 +29,8 @@ function loadList()
   allSongs.push(new Song("Get Lucky","Daft Punk","Random Access Memories",2013));
   allSongs.push(new Song("Inevitable","Shakira","Dónde Están los Ladrones?",1998));
   allSongs.push(new Song("Wagon Wheel","Old Crow Medicine Show","Old Crow Medicine Show",2004));
+  allSongs[current].play();
+  displaySong();
 }
 
 //Progresses to the next song to the list, or if the end of the list has been
@@ -36,11 +38,13 @@ function loadList()
 function nextSong()
 {
   current = (current+1)%allSongs.length;
+  allSongs[current].play();
   displaySong();
 }
 
 //Show song's information in the "nowPlaying" span
 function displaySong()
 {
-  document.getElementById("nowPlaying").innerHTML = allSongs[current].toString();
+  var text = allSongs[current].toString() + "<br>" + allSongs[current].releaseInfo()+ "<br>Listened: " + allSongs[current].listened + " time(s)";
+  document.getElementById("nowPlaying").innerHTML = text;
 }
